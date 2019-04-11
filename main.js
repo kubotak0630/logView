@@ -8,11 +8,22 @@ function _toString08x(num) {
 class HtmlView {
 
   constructor(htmlObj) {
-    this._htmlObj = htmlObj;
+    this._htmlObj = htmlObj; //このオブジェクトのinnerHTMLを更新することで画面が描画される
     this._start_html = '';
     this._summary_html = '';
   }
 
+  create_start_view() {
+    //create StartView
+    let start_html = '';
+    start_html += '<input type="file" id="dumpfile" name="dumpfile" />';
+    start_html += '<div><button id="btn_analize" disabled="disabled">解析スタート!</div>';
+
+    
+    //ここでスタート画面ができあがる
+    this._htmlObj.innerHTML = start_html;
+
+  }
   set_start_view(str_html) {
     this._start_html = str_html;
   }
@@ -197,27 +208,18 @@ console.log(`a = ${a}`);
 console.log(excel_register_json[0].addr);
 
 
-const g_html_obj = document.getElementById("html_txt"); 
+const html_obj = document.querySelector("#html_txt"); 
 
 //Viewクラスを生成
-let g_htmlView = new HtmlView(g_html_obj); 
+const g_htmlView = new HtmlView(html_obj); 
 
 
 //create StartView
-let start_html = '';
-start_html += '<input type="file" id="selfile" name="selfile" />';
-start_html += '<div><input type="button" id="btn_analize" name="btn_analize"  value="解析スタート!"/></div>';
-
-g_htmlView.set_start_view(start_html);
+g_htmlView.create_start_view();
 
 
-
-//ここでスタート画面ができあがる
-g_html_obj.innerHTML = start_html;
-
-
-const fileObj = document.querySelector('#selfile');
-const dropArea = document.querySelector('#selfile'); //暫定
+const fileObj = document.querySelector('#dumpfile');
+const dropArea = document.querySelector('#dumpfile'); //暫定
 
 
 let g_addr_table = {}; //key:アドレス(string), val:値(string)の辞書。read_fileで読み込まれる
@@ -531,6 +533,10 @@ function read_file(input_text) {
   let random_idx = (Math.floor(Math.random() * Object.keys(g_addr_table).length) & 0xFFFFFFFC) + 0x40000000;
   let idx_str = _toString08x(random_idx); //0をつけて8桁にする
   console.log(`read finish ${text_ary.length}, g_addr_table[${idx_str}]=${g_addr_table[idx_str]}`);
-  alert(`read finish ${text_ary.length}, g_addr_table[${idx_str}]=${g_addr_table[idx_str]}`);
+  // alert(`read finish ${text_ary.length}, g_addr_table[${idx_str}]=${g_addr_table[idx_str]}`);
+
+  //解析スタートボタンを有効にする
+  document.querySelector("#btn_analize").removeAttribute("disabled");
+
 
 }

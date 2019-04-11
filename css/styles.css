@@ -12,6 +12,10 @@ body {
 */
 /** class gen_tbl: generateしたすべてのテーブルにつくclass名 **/
 
+#body_wrapper {
+    padding: 10px 20px;
+}
+
 .gen_tbl {
     border-collapse: collapse;
     margin-bottom:40px;
