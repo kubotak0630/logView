@@ -127,7 +127,7 @@ class HtmlView {
       const iu_full_flg= (reg_iu_full_bimap & (0x1 << i)) != 0 ? 'False' : 'True'; 
       const ndc_tag_addr = g_dumpAnalyzer.calc_NDC_TAG_ADDR(i, ch_idx);
       const infoObj = g_dumpAnalyzer.calc_L2PInfoTbl_ADDR(ndc_tag_addr, ch_idx);
-      const temp_ary = [i, 'HOGE_RECIPE', iu_full_flg, _toString08x(ndc_tag_addr), infoObj.L2P_TAG, _toString08x(infoObj.l2pInfoTbl_addr)];
+      const temp_ary = [i, 'HOGE_RECIPE', iu_full_flg, _toString08x(ndc_tag_addr), infoObj.L2P_TAG, _toString08x(infoObj.l2pInfoTbl_addr+0x100*i)];
       tbl_data_ary.push({'table_row': temp_ary, 'color': false});
     }
 
@@ -185,7 +185,18 @@ class HtmlView {
       node_list[i].addEventListener('click', (evt) => {
         //"evt.srcElement.innerText"からボタンに示されたアドレスの数字部分を取り出す
         //const matchOB = /([0-9a-fA-F]+)/.exec(evt.srcElement.innerText);
-        alert(`L2PInfoTbl_Addr: ${evt.srcElement.innerText}`);
+        //alert(`L2PInfoTbl_Addr: ${evt.srcElement.innerText}`);
+
+
+        document.querySelector('#l2p_tag').innerText = `${evt.srcElement.innerText}`;
+
+        const L2PInfoTbl_obj = document.querySelector('#ch_l2pinfo_tbl');
+        
+        for (let i = 0; i < 32; i++) {
+          L2PInfoTbl_obj.rows[1+i].cells[1].innerText = `hoge${i} ${evt.srcElement.innerText}`;
+        }
+        
+
         //this._showDumpData_by_CH(parseInt(matchOB[1]));
       });
     }
