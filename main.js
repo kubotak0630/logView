@@ -77,12 +77,12 @@ class HtmlView {
     //create StartView
     let start_html = '';
 
-    start_html += '<div id=start_wrapper>'
+    start_html += '<div id=start_wrapper>';
     //Dumpファイル選択ボタン
     start_html += '<div id="divbtn_dmupfile">Dumpファイルを選択 or FileDrop</div>';
     start_html += '<input type="file" id="dumpfile"/>';
     start_html += '<input type="text" id="dump_filename" placeholder="ファイルが選択されていません" readonly />';
-    start_html += '<br>'
+    start_html += '<br>';
     //メインレシピ選択ボタン
     start_html += '<div id="divbtn_mrcpfile">メインレシピファイルを選択 or FileDrop</div>';
     start_html += '<input type="file" id="mrcpfile"/>';
@@ -104,7 +104,7 @@ class HtmlView {
       $(id_input_text).val(match !== -1 ? val.substring(match + 1) : val);
     };
 
-    const set_filebtn_jquery = (id_input_file, id_divbtn, id_input_text) => {
+    function set_filebtn_jquery(id_input_file, id_divbtn, id_input_text) {
       
       $(id_input_file).change(function() {
         show_fname($(this).val(), id_input_text);
@@ -118,7 +118,7 @@ class HtmlView {
       $(id_divbtn).click(function () {
         $(id_input_file).trigger('click');
       });
-    };
+    }
 
     set_filebtn_jquery('#dumpfile', '#divbtn_dmupfile', '#dump_filename');
 
